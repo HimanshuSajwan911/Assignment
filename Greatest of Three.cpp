@@ -19,6 +19,5 @@ int main(){
 
     std::cout<<"\nLargest number among: "<<a<<","<<b<<","<<c<<" is: "<<largest<<"\n";
 
-
     return 0;
 }
