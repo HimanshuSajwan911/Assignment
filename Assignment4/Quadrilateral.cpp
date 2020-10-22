@@ -206,7 +206,7 @@ int main(){
     trap.printID();
     cout<<"\nPerimeter: "<<trap.getPerimeter();
     cout<<"\nArea: "<<trap.getArea();
-
+    
     cout<<"\n";
 
     return 0;
