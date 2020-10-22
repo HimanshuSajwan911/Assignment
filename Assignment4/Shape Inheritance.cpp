@@ -118,7 +118,9 @@ public:
     void setHeight(double height){
         HEIGHT=height;
     }
-
+    void draw(){
+        cout<<"Drawing Trapezoid...";
+    }
     double getPerimeter(){
         return SIDE_A+SIDE_B+SIDE_C+SIDE_D;
     }
@@ -126,6 +128,49 @@ public:
         return ((SIDE_B+SIDE_D)/2)*HEIGHT;
     }
 
+};
+
+class Rhombus:public Quadrilateral{
+protected:
+    double DIAGONAL_A,DIAGONAL_B;
+
+public:
+    Rhombus(){
+        NAME="Rhombus";
+        DIAGONAL_A=0;
+        DIAGONAL_B=0;
+    }
+    virtual string getName(){
+        return NAME;
+    }
+    void setDiagonal_A(double diagonalA){
+        DIAGONAL_A=diagonalA;
+    }
+    void setDiagonal_B(double diagonalB){
+        DIAGONAL_B=diagonalB;
+    }
+    void setSide(double side){
+        SIDE_A=SIDE_B=SIDE_C=SIDE_D=side;
+    }
+    void draw(){
+        cout<<"Drawing Rhombus...";
+    }
+
+    double getDiagonal_A(){
+        return DIAGONAL_A;
+    }
+    double getDiagonal_B(){
+        return DIAGONAL_B;
+    }
+    double getSide(){
+        return SIDE_A;
+    }
+    double getArea(){
+        return 0.5*DIAGONAL_A*DIAGONAL_B;
+    }
+    double getPerimeter(){
+        return 4*SIDE_A;
+    }
 };
 
 class Ellipse:public TwoDShape{
@@ -166,52 +211,17 @@ public:
     }
 };
 
-class Rhombus:public Quadrilateral{
-protected:
-    double DIAGONAL_A,DIAGONAL_B;
-
-public:
-    Rhombus(){
-        NAME="Rhombus";
-        DIAGONAL_A=0;
-        DIAGONAL_B=0;
-    }
-    virtual string getName(){
-        return NAME;
-    }
-    void setDiagonal_A(double diagonalA){
-        DIAGONAL_A=diagonalA;
-    }
-    void setDiagonal_B(double diagonalB){
-        DIAGONAL_B=diagonalB;
-    }
-    void setSide(double side){
-        SIDE_A=SIDE_B=SIDE_C=SIDE_D=side;
-    }
-
-    double getDiagonal_A(){
-        return DIAGONAL_A;
-    }
-    double getDiagonal_B(){
-        return DIAGONAL_B;
-    }
-    double getSide(){
-        return SIDE_A;
-    }
-    double getArea(){
-        return 0.5*DIAGONAL_A*DIAGONAL_B;
-    }
-    double getPerimeter(){
-        return 4*SIDE_A;
-    }
-};
-
-
 class Circle:public Ellipse{
 public:
     Circle(double radius=0){
         NAME="Circle";
         MAJOR_RADIUS=MINOR_RADIUS=radius;
+    }
+    virtual void setMajorRadius(double RadiusMajor){
+        MAJOR_RADIUS=MINOR_RADIUS=RadiusMajor;
+    }
+    virtual void setMinorRadius(double RadiusMinor){
+        MAJOR_RADIUS=MINOR_RADIUS=RadiusMinor;
     }
     void setRadius(double radius){
         MAJOR_RADIUS=MINOR_RADIUS=radius;
@@ -235,8 +245,6 @@ public:
 class ThreeDShape:public Shape{
 protected:
 
-    virtual double getPerimeter()=0;
-    virtual void setName(string)=0;
     virtual string getName()=0;
     virtual double getArea()=0;
     virtual double getVolume()=0;
@@ -244,13 +252,97 @@ protected:
 
 };
 
+class Cube:public ThreeDShape{
+private:
+    double SIDE;
+
+public:
+    Cube(double side=0){
+        SIDE=side;
+        NAME="Cube";
+    }
+
+    string getName(){
+        return NAME;
+    }
+    void draw(){
+        cout<<"Drawing Cube...";
+    }
+    void setSide(double side){
+        SIDE=side;
+    }
+    double getArea(){
+        return 6*SIDE*SIDE;
+    }
+    double getVolume(){
+        return SIDE*SIDE*SIDE;
+    }
+};
+
+class Cuboid:public ThreeDShape{
+private:
+    double LENGTH,WIDTH,HEIGHT;
+
+public:
+    Cuboid(double length=0,double width=0,double height=0){
+        LENGTH=length;
+        WIDTH=width;
+        HEIGHT=height;
+        NAME="Cuboid";
+    }
+
+    string getName(){
+        return NAME;
+    }
+    void draw(){
+        cout<<"Drawing Cuboid...";
+    }
+    void setLength(double length){
+        LENGTH=length;
+    }
+    void setWidth(double width){
+        WIDTH=width;
+    }
+    void setHeight(double height){
+        HEIGHT=height;
+    }
+    void setDimensions(double length,double width,double height){
+        LENGTH=length;
+        WIDTH=width;
+        HEIGHT=height;
+    }
+    double getArea(){
+        return 2*(LENGTH*WIDTH + LENGTH*HEIGHT + HEIGHT*WIDTH);
+    }
+    double getVolume(){
+        return LENGTH*WIDTH*HEIGHT;
+    }
+};
+
 int main(){
 
-    Square s;
-    s.setSide(5);
-    cout<<"Name: "<<s.getName();
-    cout<<"\nPerimeter: "<<s.getPerimeter();
-    cout<<"\nArea: "<<s.getArea();
+    Square sq;
+    cout<<"Name: "<<sq.getName();
+    cout<<"\nSetting side= 5u.";
+    sq.setSide(5);
+    cout<<"\nPerimeter: "<<sq.getPerimeter()<<"u";
+    cout<<"\nArea: "<<sq.getArea()<<"u^2";
+
+    Circle cir;
+    cout<<"\n\nName: "<<cir.getName();
+    cout<<"\nSetting radius= 5u.";
+    cir.setRadius(5);
+    cout<<"\nCircumference: "<<cir.getPerimeter()<<"u";
+    cout<<"\nArea: "<<cir.getArea()<<"u^2";
+
+    Cuboid cuboid;
+    cout<<"\n\nName: "<<cuboid.getName();
+    cout<<"\nSetting Length=5u Width=2u Height=3u";
+    cuboid.setDimensions(5,2,3);
+    cout<<"\nSurface Area: "<<cuboid.getArea()<<"u^2";
+    cout<<"\nVolume: "<<cuboid.getVolume()<<"u^3";
+
+    cout<<"\n";
 
     return 0;
 }
